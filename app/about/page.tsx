@@ -11,6 +11,9 @@ function AboutPage() {
                     <div>
                         <Image src="/cat.jpeg" height={300} width={350} alt="cat" />
                     </div>
+                    <button className='text-lg bg-amber-200 px-4 py-2 shadow-lg rounded-4xl'>
+                        Join me
+                    </button>
                 </h1>
             </div>
 
