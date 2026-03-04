@@ -15,20 +15,43 @@ export default function UserPage() {
     { id: 3, name: "Naphat Foython", age: 20 },
   ])
 
-  const addUser = (e: FormEvent) => {
+  const [editId, setEditId] = useState(-1)
+
+  const saveUser = (e: FormEvent) => {
     e.preventDefault()
-    console.log("Add user")
-    setUsers( [...users, {
-      id:  (users.length===0)?1:users[users.length-1].id+1,
-      name: form.name,
-      age: form.age
-    }] )
+
+    if (editId === -1) {
+      setUsers([...users, {
+        id: (users.length === 0) ? 1 : users[users.length - 1].id + 1,
+        name: form.name,
+        age: form.age
+      }])
+    } else {
+      const tmpForm = {
+        id: editId,
+        name: form.name,
+        age: form.age,
+      }
+      const tmpUsers = users.map((user, index) => (index === editId) ? tmpForm : user)
+      setUsers([...tmpUsers])
+      setForm({
+        name: "Jim",
+        age: 32
+      })
+      setEditId(-1)
+    }
   }
 
   const deleteUser = (id: number) => {
-    const tmpUsers = users.filter( (item) => ( item.id !== id ) )
+    const tmpUsers = users.filter((item) => (item.id !== id))
     // console.log(tmpUsers)
     setUsers([...tmpUsers])
+  }
+
+  const editUser = (index: number) => {
+    setForm(users[index])
+    setEditId(index)
+    console.log("Edit id: ", editId)
   }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -65,9 +88,11 @@ export default function UserPage() {
         </div>
         <div>
           <button
-            onClick={addUser}
+            onClick={saveUser}
             className="border p-2 rounded-lg mb-2"
-          >Add</button>
+          >
+            {(editId === -1) ? "Add" : "Update"}
+          </button>
         </div>
       </form>
 
@@ -75,9 +100,14 @@ export default function UserPage() {
       <div>
         {
           users.map((item, index) => <div key={index}>
-            {item.id} :
+            {index + 1}
+            {/* {item.id} : */}
             {item.name} :
             {item.age}
+            <button
+              className="border px-2 ml-2 mb-2 rounded-md"
+              onClick={() => editUser(index)}
+            >e</button>
             <button
               className="border px-2 ml-2 rounded-md"
               onClick={() => deleteUser(item.id)}
