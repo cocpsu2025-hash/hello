@@ -1,15 +1,45 @@
+'use client'
+
 import Image from 'next/image'
-const URL = 'https://api.github.com/users/wwarodom'
+import { useState } from 'react'
+const URL = 'https://api.github.com/users'
 
-export default async function FetchPage() {
+type UserType = {
+    login: string
+    location: string
+    blog: string
+    avatar_url: string
+}
 
-    const response = await fetch(URL)
-    const data = await response.json()
-    console.log("Response: ", data)
+export default function FetchPage() {
+
+    const fetchUser = async () => {
+        const response = await fetch(`${URL}/${name}`)
+        const data = await response.json()
+        console.log("Response: ", data)
+        setData(data)
+    }
+
+
+    const [name, setName] = useState('wwarodom')
+    const [data, setData] = useState({} as UserType)
 
     return (
         <div>
             <h1>Fetch</h1>
+            <div>
+                <input
+                    className='rounded border p-2 mr-2'
+                    type="text" name="name"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                />
+                <button
+                    className='rounded border p-2 mb-2'
+                    onClick={fetchUser}
+                >Fetch</button>
+            </div>
+
             {/* <div>{JSON.stringify(data)} </div> */}
             <div className="flex border bg-amber-100 p-4 rounded-lg justify-between items-center w-90">
                 <div>
@@ -25,8 +55,9 @@ export default async function FetchPage() {
                 </div>
                 <div>
                     <Image
-                        className='rounded-full'
-                        src={data.avatar_url} width={100} height={100} alt="github image" />
+                        loading="eager"
+                        className='rounded-full w-auto h-auto'
+                        src={data.avatar_url ?? '/cat.jpeg'} width={100} height={100} alt="github image" />
 
                 </div>
             </div>
