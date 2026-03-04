@@ -25,6 +25,12 @@ export default function UserPage() {
     }] )
   }
 
+  const deleteUser = (id: number) => {
+    const tmpUsers = users.filter( (item) => ( item.id !== id ) )
+    // console.log(tmpUsers)
+    setUsers([...tmpUsers])
+  }
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     console.log("Name: ", name, "value: ", value)
@@ -72,6 +78,11 @@ export default function UserPage() {
             {item.id} :
             {item.name} :
             {item.age}
+            <button
+              className="border px-2 ml-2 rounded-md"
+              onClick={() => deleteUser(item.id)}
+            >x</button>
+
           </div>)
         }
       </div>
