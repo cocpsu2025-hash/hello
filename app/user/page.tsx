@@ -97,21 +97,34 @@ export default function UserPage() {
       </form>
 
 
-      <div>
+      <div className="border p-2 flex  flex-wrap gap-4 rounded-lg justify-center ">
         {
-          users.map((item, index) => <div key={index}>
-            {index + 1}
-            {/* {item.id} : */}
-            {item.name} :
-            {item.age}
-            <button
-              className="border px-2 ml-2 mb-2 rounded-md"
-              onClick={() => editUser(index)}
-            >e</button>
-            <button
-              className="border px-2 ml-2 rounded-md"
-              onClick={() => deleteUser(item.id)}
-            >x</button>
+          users.map((item, index) => <div
+            className="border px-4 py-2 m-2 rounded-lg flex justify-between items-center min-w-64 bg-amber-200 shadow-lg"
+            key={index}>
+            <div>
+              <div>
+                id: {item.id}
+              </div>
+              <div>
+                {item.name}
+              </div>
+              <div>
+                Age: {item.age}
+              </div>
+            </div>
+
+            <div className="ml-8 flex flex-col">
+              <button
+                className="border px-2 rounded-md mb-2 bg-green-200"
+                onClick={() => editUser(index)}
+              >e</button>
+              <button
+                className="border px-2 rounded-md bg-red-800 text-white"
+                onClick={() => deleteUser(item.id)}
+              >x</button>
+            </div>
+
 
           </div>)
         }
