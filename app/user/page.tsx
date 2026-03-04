@@ -27,11 +27,19 @@ export default function UserPage() {
         age: form.age
       }])
     } else {
-      const tmpForm = {
-        id: editId,
-        name: form.name,
-        age: form.age,
-      }
+
+      const id = users[editId].id
+      const { name, age } = form
+      const tmpForm = { id, name, age }
+
+      // const tmpForm = {
+      //   id: users[editId].id,
+      //   name: form.name,
+      //   age: form.age,
+      // }
+
+
+
       const tmpUsers = users.map((user, index) => (index === editId) ? tmpForm : user)
       setUsers([...tmpUsers])
       setForm({
