@@ -19,7 +19,7 @@ export default function UserPage() {
     e.preventDefault()
     console.log("Add user")
     setUsers( [...users, {
-      id: users.length+1,
+      id:  (users.length===0)?1:users[users.length-1].id+1,
       name: form.name,
       age: form.age
     }] )
