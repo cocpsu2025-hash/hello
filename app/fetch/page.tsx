@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 const URL = 'https://api.github.com/users'
 
 type UserType = {
@@ -13,6 +13,10 @@ type UserType = {
 
 export default function FetchPage() {
 
+
+    const [name, setName] = useState('wwarodom')
+    const [data, setData] = useState({} as UserType)
+
     const fetchUser = async () => {
         const response = await fetch(`${URL}/${name}`)
         const data = await response.json()
@@ -20,10 +24,11 @@ export default function FetchPage() {
         setData(data)
     }
 
-
-    const [name, setName] = useState('wwarodom')
-    const [data, setData] = useState({} as UserType)
-
+    useEffect(() => {
+        console.log("Use effect")
+        fetchUser()
+    }, [])
+ 
     return (
         <div>
             <h1>Fetch</h1>
@@ -57,7 +62,7 @@ export default function FetchPage() {
                     <Image
                         loading="eager"
                         className='rounded-full w-auto h-auto'
-                        src={data.avatar_url ?? '/cat.jpeg'} width={100} height={100} alt="github image" />
+                        src={data.avatar_url ?? '/cat.jpeg'} width={70} height={70} alt="github image" />
 
                 </div>
             </div>
