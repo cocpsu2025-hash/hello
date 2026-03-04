@@ -1,6 +1,6 @@
 'use client'
 
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, FormEvent, useState } from "react"
 
 export default function UserPage() {
 
@@ -9,11 +9,21 @@ export default function UserPage() {
     age: 32,
   })
 
-  const users = [
+  const [users, setUsers] = useState([
     { id: 1, name: "Warodom Werapun", age: 40 },
     { id: 2, name: "John Petruci", age: 43 },
     { id: 3, name: "Naphat Foython", age: 20 },
-  ]
+  ])
+
+  const addUser = (e: FormEvent) => {
+    e.preventDefault()
+    console.log("Add user")
+    setUsers( [...users, {
+      id: users.length+1,
+      name: form.name,
+      age: form.age
+    }] )
+  }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -49,9 +59,7 @@ export default function UserPage() {
         </div>
         <div>
           <button
-            onClick={() => {
-              console.log("click")
-            }}
+            onClick={addUser}
             className="border p-2 rounded-lg mb-2"
           >Add</button>
         </div>
