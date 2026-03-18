@@ -7,7 +7,7 @@ import { addTodo, deleteTodo } from "./action";
 export default function ListTodo({ data }:
     { data: TodoType[] }) {
 
-    const [state, action] = useActionState(addTodo, {
+    const [state, action, isPending] = useActionState(addTodo, {
         errors: {
             task: { errors: [] },
             time: { errors: [] },
@@ -28,7 +28,11 @@ export default function ListTodo({ data }:
                 {(state?.errors && <p className="text-red-600">{state.errors.time?.errors[0]}</p>) }
             </div>
             <div>
-                <button className="border p-2 my-2 rounded" type="submit">Add</button>
+                <button className="border p-2 my-2 rounded" 
+                    disabled={isPending}
+                    type="submit">
+                    {isPending?"Add...":"Add"}
+                    </button>
             </div>
         </form>
 
