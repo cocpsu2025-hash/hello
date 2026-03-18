@@ -1,7 +1,8 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import {URL} from "./constant"
+import { todoSchema, URL } from "./constant"
+import z from "zod"
 
 export async function addTodo(prevState: unknown, formData: FormData) {
     const task = formData.get("task") as string
@@ -9,9 +10,17 @@ export async function addTodo(prevState: unknown, formData: FormData) {
 
     console.log(task, time)
 
+    const result = todoSchema.safeParse({ task, time })
+    if (!result.success) {
+        console.log("TreeifyError: ", z.treeifyError(result.error).properties)
+        return {
+            errors: z.treeifyError(result.error).properties,
+        }
+    }
+
     await fetch(URL, {
         method: "POST",
-        body: JSON.stringify({task,time})
+        body: JSON.stringify({ task, time })
     })
 
     revalidatePath("/todo")
