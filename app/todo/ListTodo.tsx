@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { TodoType } from "./constant";
-import { addTodo } from "./action";
+import { addTodo, deleteTodo } from "./action";
 
 export default function ListTodo({ data }:
     { data: TodoType[] }) {
@@ -39,6 +39,11 @@ export default function ListTodo({ data }:
             {
                 data.map((item, index) => <div key={index}>
                     {item.id} : {item.task} : {item.time}
+                    <button className="border px-2 m-2"
+                        onClick={ () => deleteTodo(item.id)}
+                        >
+                        x
+                    </button>
                 </div>)
             }
         </div>

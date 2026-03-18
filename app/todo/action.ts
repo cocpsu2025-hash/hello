@@ -4,6 +4,17 @@ import { revalidatePath } from "next/cache"
 import { todoSchema, URL } from "./constant"
 import z from "zod"
 
+export async function deleteTodo(id: string) {
+    console.log("Id: ", id)
+
+    await fetch(`${URL}/${id}`, {
+        method: "DELETE"
+    })
+
+    revalidatePath("/todo")
+}
+
+
 export async function addTodo(prevState: unknown, formData: FormData) {
     const task = formData.get("task") as string
     const time = Number(formData.get("time"))
