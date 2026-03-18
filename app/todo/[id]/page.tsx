@@ -1,27 +1,46 @@
-// import { useActionState } from "react"
-import { URL } from "../constant"
+'use client'
 
-export default async function EditTodo({ params }: { params: Promise<{ id: string }> }) {
+import { useActionState, useEffect, useState } from "react"
+import { TodoType, URL } from "../constant"
+import { updateTodo } from "../action"
 
-    // const id = (await params).id
-    const { id } = (await params)  // destructuring
+export default function EditTodo({ params }: { params: Promise<{ id: string }> }) {
 
-    const todo = await (await fetch(`${URL}/${id}`)).json()
+    const [id, setId] = useState("")
+    const [todo, setTodo] = useState<TodoType>({ id: "" })
+    const [state, action] = useActionState(updateTodo, {
+        errors: {
+            task: { errors: [] },
+            time: { errors: [] },
+        }
+    })
 
-    console.log("Todo: ", todo)
+    useEffect(() => {
+        const fetchTodo = async () => {
+            // const id = (await params).id
+            const { id } = (await params)  // destructuring
+            setId(id)
+            const todo = await (await fetch(`${URL}/${id}`)).json()
+            console.log("Todo: ", todo)
+            setTodo(todo)
+        }
+        fetchTodo()
+    }, [])
 
-    // const [state, action] = useActionState(updateTodo, {})
 
     return <> ID: {id}
         <h1>Edit Todo</h1>
         <div>
-            <form action="/">
+            <form action={action}>
                 <input
-                    className="border p-2 m-2"
+                    className="border p-2 my-2"
                     type="text" name="task" defaultValue={todo.task} />
-                <input className="border p-2 m-2"
+                {(state?.errors && <p className="text-red-500">{state.errors.task?.errors[0]}</p>)}
+                <input className="border p-2 my-2"
                     type="number" name="time" defaultValue={todo.time} />
-                <button className="border p-2 m-2"
+                {(state?.errors && <p className="text-red-500">{state.errors.time?.errors[0]}</p>)}
+                <input type="hidden" name="id" value={todo.id} />
+                <button className="border p-2 my-2"
                     type="submit">Update</button>
             </form>
         </div>
