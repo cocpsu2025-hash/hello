@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { TodoType } from "./constant";
 import { addTodo, deleteTodo } from "./action";
+import Link from "next/link";
 
 export default function ListTodo({ data }:
     { data: TodoType[] }) {
@@ -48,6 +49,11 @@ export default function ListTodo({ data }:
                         >
                         x
                     </button>
+                    <Link className="border px-2 m-2"
+                        href={`/todo/${item.id}`}
+                        >
+                        Edit
+                    </Link>
                 </div>)
             }
         </div>
