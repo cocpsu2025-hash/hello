@@ -3,12 +3,17 @@
    {
      "id": "2a0a",
      "task": "Play basketball",
-     "time": "23"
+     "time": 23
+   },
+   {
+     "id": "2a9a",
+     "task": "Write web program",
+     "time": 23
    },
    {
      "id": "22f3",
      "task": "Play Game Guitar",
-     "time": "73"
+     "time": 73
    }
  ], 
  "foo" : {

@@ -1,18 +1,15 @@
 import { URL } from "./constant"
+import ListTodo from "./ListTodo"
 
 export default async function Todo() {
 
     const data = await fetchTodo()
-    if ( !data ) {
+    if (!data) {
         return <p className="text-red-500 font-xl font-bold">Fetch Error!!</p>
     }
-        
-    
 
-    return <>
-        Hello
-        {JSON.stringify(data)}
-    </>
+    return  <ListTodo data={data} />
+
 }
 
 async function fetchTodo() {
