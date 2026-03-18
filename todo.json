@@ -1,0 +1,18 @@
+{
+ "todos": [
+   {
+     "id": "2a0a",
+     "task": "Play basketball",
+     "time": "23"
+   },
+   {
+     "id": "22f3",
+     "task": "Play Game Guitar",
+     "time": "73"
+   }
+ ], 
+ "foo" : {
+    "name": "Bar",
+    "age": 45
+ }
+}
